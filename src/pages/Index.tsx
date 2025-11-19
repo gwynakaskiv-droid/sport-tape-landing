@@ -1,10 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Index = () => {
   const [selectedColor, setSelectedColor] = useState("beige");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const colors = [
     {
@@ -147,7 +166,7 @@ const Index = () => {
 
       <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto mb-20">
+          <div className="max-w-4xl mx-auto mb-20 animate-on-scroll opacity-0">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
               Выберите свой цвет
             </h2>
@@ -185,11 +204,11 @@ const Index = () => {
             </div>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-slide-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0">
             Преимущества наших тейпов
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-on-scroll opacity-0">
             {[
               {
                 icon: "Zap",
@@ -317,12 +336,12 @@ const Index = () => {
 
       <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0">
             Как правильно клеить тейпы
           </h2>
           
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 animate-on-scroll opacity-0">
               {[
                 {
                   step: "1",
